@@ -6,9 +6,18 @@
     <router-view />
 
     <!---------------------- Modals -------------->
-    <JoinRoomModal />
+    <JoinMatchModal />
   </main>
   <footer>
+    <div class="navbar">
+      <div class="active">
+        Profile
+      </div>
+      <div>
+        My Groups
+      </div>
+      <div>My Teams?</div>
+    </div>
   </footer>
 </template>
 
