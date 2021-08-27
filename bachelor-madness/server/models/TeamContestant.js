@@ -5,7 +5,8 @@ export const TeamContestant = new Schema(
   {
     teamId: { type: Schema.Types.ObjectId, required: true },
     contestantId: { type: Schema.Types.ObjectId, required: true },
-    creatorId: { type: Schema.Types.ObjectId, required: true }
+    creatorId: { type: Schema.Types.ObjectId, required: true },
+    bracketOrder: { type: Number, required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
