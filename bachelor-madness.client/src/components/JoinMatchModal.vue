@@ -39,7 +39,7 @@
 
 <script>
 import { reactive } from '@vue/reactivity'
-import { groupMatchService } from '../services/GroupMatchService'
+import { groupService } from '../services/GroupService'
 export default {
   setup() {
     const state = reactive({
@@ -48,7 +48,7 @@ export default {
     return {
       state,
       async joinMatch() {
-        await groupMatchService.joinMatch(state.matchCode)
+        await groupService.joinMatch(state.matchCode)
       }
     }
   }

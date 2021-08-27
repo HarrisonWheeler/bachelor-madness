@@ -1,11 +1,11 @@
 import { AppState } from '../AppState'
 import { api } from './AxiosService'
 
-class GroupMatchService {
+class GroupService {
   async joinMatch(mCode) {
     const res = await api.post('groupMatch', { matchCode: mCode })
     AppState.ActiveMatch = res.data
   }
 }
 
-export const groupMatchService = new GroupMatchService()
+export const groupService = new GroupService()

@@ -15,12 +15,12 @@
     <div class="row height align-items-center text-center" v-if="user.isAuthenticated">
       <div class="col-12">
         <button class="btn btn-danger">
-          Create Group
+          Create Match
         </button>
       </div>
       <div class="col-12">
         <button class="btn btn-danger" data-target="#joinGroup" data-toggle="modal">
-          Join Group
+          Join Match
         </button>
       </div>
     </div>
