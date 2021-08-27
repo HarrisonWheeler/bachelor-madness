@@ -4,6 +4,9 @@
   </header>
   <main>
     <router-view />
+
+    <!---------------------- Modals -------------->
+    <JoinRoomModal />
   </main>
   <footer>
   </footer>

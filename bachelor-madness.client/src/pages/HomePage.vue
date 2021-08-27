@@ -19,7 +19,7 @@
         </button>
       </div>
       <div class="col-12">
-        <button class="btn btn-danger">
+        <button class="btn btn-danger" data-target="#joinGroup" data-toggle="modal">
           Join Group
         </button>
       </div>
