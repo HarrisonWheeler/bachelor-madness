@@ -4,7 +4,7 @@ import { AccountSchema } from '../models/Account'
 import { Team } from '../models/Team'
 import { Contestant } from '../models/Contestant'
 import { TeamContestant } from '../models/TeamContestant'
-import { GroupMatch } from '../models/GroupMatch'
+import { Group } from '../models/Group'
 
 class DbContext {
   Values = mongoose.model('Value', ValueSchema);
@@ -12,7 +12,7 @@ class DbContext {
   Team = mongoose.model('Team', Team)
   Contestant = mongoose.model('Contestant', Contestant)
   TeamContestant = mongoose.model('TeamContestant', TeamContestant)
-  GroupMatch = mongoose.model('GroupMatch', GroupMatch)
+  Group = mongoose.model('Group', Group)
 }
 
 export const dbContext = new DbContext()

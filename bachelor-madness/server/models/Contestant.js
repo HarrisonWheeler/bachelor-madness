@@ -7,7 +7,8 @@ export const Contestant = new Schema(
     bio: { type: String, required: true },
     imgUrl: { type: String, required: true },
     teamId: { type: Schema.Types.ObjectId, required: true },
-    score: { type: Number, required: true, default: 0 }
+    score: { type: Number, required: true, default: 0 },
+    eliminated: { type: Boolean, required: true, default: false }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
