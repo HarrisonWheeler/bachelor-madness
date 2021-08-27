@@ -1,4 +1,5 @@
 import { dbContext } from '../db/DbContext'
+import { BadRequest } from '../utils/Errors'
 
 // Private Methods
 
@@ -102,6 +103,14 @@ class AccountService {
       { runValidators: true, setDefaultsOnInsert: true, new: true }
     )
     return account
+  }
+
+  async getTeamByAccountId(userId) {
+    const foundTeam = await dbContext.Team.find({ creatorId: userId })
+    if (!foundTeam) {
+      throw new BadRequest('Not able to find your team')
+    }
+    return foundTeam
   }
 }
 export const accountService = new AccountService()

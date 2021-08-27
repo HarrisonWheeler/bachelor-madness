@@ -5,7 +5,8 @@ export const Team = new Schema(
   {
     creatorId: { type: Schema.Types.ObjectId, required: true },
     name: { type: String, required: true },
-    teamScore: { type: Number, required: true, default: 0 }
+    teamScore: { type: Number, required: true, default: 0 },
+    groupId: { type: Schema.Types.ObjectId, required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
