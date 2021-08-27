@@ -9,6 +9,7 @@ export class AccountController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
       .get('/team', this.getTeamByAccountId)
+      .get('/groups', this.getGroupsByAccountId)
   }
 
   async getUserAccount(req, res, next) {
@@ -22,8 +23,15 @@ export class AccountController extends BaseController {
 
   async getTeamByAccountId(req, res, next) {
     try {
-      const team = await accountService.getTeamByAccountId(req.userInfo.id)
-      res.send(team)
+      res.send(await accountService.getTeamByAccountId(req.userInfo.id))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getGroupsByAccountId(req, res, next) {
+    try {
+      res.send(await accountService.getGroupsByAccountId(req.userInfo.id))
     } catch (error) {
       next(error)
     }
