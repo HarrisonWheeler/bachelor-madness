@@ -10,8 +10,8 @@ export class TeamController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('/:id', this.getTeamById)
       .post('', this.createTeam)
-      .delete('/:id', this.deleteTeam)
       .put('/:id', this.editTeam)
+      .delete('/:id', this.deleteTeam)
   }
 
   async getTeamById(req, res, next) {
@@ -31,18 +31,18 @@ export class TeamController extends BaseController {
     }
   }
 
-  async deleteTeam(req, res, next) {
+  async editTeam(req, res, next) {
     try {
-      res.send(await teamService.deleteTeam(req.params.id, req.userInfo.id))
+      req.body.creatorId = req.userInfo.id
+      res.send(await teamService.editTeam(req.body, req.params.id))
     } catch (error) {
       next(error)
     }
   }
 
-  async editTeam(req, res, next) {
+  async deleteTeam(req, res, next) {
     try {
-      req.body.creatorId = req.userInfo.id
-      res.send(await teamService.editTeam(req.body, req.params.id))
+      res.send(await teamService.deleteTeam(req.params.id, req.userInfo.id))
     } catch (error) {
       next(error)
     }
