@@ -1,25 +1,49 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo">
-    <h1 class="my-5 bg-dark text-light p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-white">Vue 3 Starter</span>
-    </h1>
+  <div class="container-fluid">
+    <div class="row height align-items-center text-center" v-if="!user.isAuthenticated">
+      <div class="col-12">
+        <button class="btn btn-danger" @click="login">
+          Create Account
+        </button>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-danger" @click="login">
+          Login
+        </button>
+      </div>
+    </div>
+    <div class="row height align-items-center text-center" v-if="user.isAuthenticated">
+      <div class="col-12">
+        <button class="btn btn-danger">
+          Create Group
+        </button>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-danger" data-target="#joinGroup" data-toggle="modal">
+          Join Group
+        </button>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
+import { computed } from '@vue/runtime-core'
+import { AppState } from '../AppState'
+import { AuthService } from '../services/AuthService'
 export default {
-  name: 'Home'
+  setup() {
+    return {
+      user: computed(() => AppState.user),
+      async login() {
+        AuthService.loginWithPopup()
+      }
+    }
+  }
 }
 </script>
 
-<style scoped lang="scss">
-.home{
-  text-align: center;
-  user-select: none;
-  > img{
-    height: 200px;
-    width: 200px;
-  }
+<style lang="scss" scoped>
+.height{
+  height: 80vh;
 }
 </style>
