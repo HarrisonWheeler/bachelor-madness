@@ -1,0 +1,16 @@
+
+  {
+    "name": "bachelor-madness",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "npm run setup:server",
+      "setup:app": "npm run setup:server && npm run setup:client",
+      "setup:client": "cd bachelor-madness.client && npm i",
+      "setup:server": "cd bachelor-madness && npm i",
+      "start": "node bachelor-madness/index.js"
+    },
+    "engines": {
+      "node": "^14.17.0"
+    }
+  }
+  
