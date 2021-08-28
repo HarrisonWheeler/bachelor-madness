@@ -9,10 +9,12 @@
     <JoinMatchModal />
   </main>
   <footer>
-    <div class="navbar">
-      <div class="active">
-        Profile
-      </div>
+    <div class="navbar" v-if="user.isAuthenticated">
+      <router-link :to="{ name: 'Account' }">
+        <div class="active">
+          Profile
+        </div>
+      </router-link>
       <div>
         My Groups
       </div>
@@ -28,6 +30,7 @@ export default {
   name: 'App',
   setup() {
     return {
+      user: computed(() => AppState.user),
       appState: computed(() => AppState)
     }
   }
