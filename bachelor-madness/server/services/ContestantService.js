@@ -17,6 +17,19 @@ class ContestantService {
   async addContestant(newContestant) {
     return await dbContext.Contestant.create(newContestant)
   }
+
+  async deleteContestant(contestantId) {
+    const contestantToDelete = await this.getContestantById(contestantId)
+    if (!contestantToDelete) {
+      throw new BadRequest('Unable to delete contestant')
+    }
+    return contestantToDelete
+  }
+
+  async editContestant(editedContestant, contestantId) {
+    await this.getContestantById(contestantId)
+    return await dbContext.Contestant.findByIdAndUpdate(contestantId, editedContestant, { new: true })
+  }
 }
 
 export const contestantService = new ContestantService()

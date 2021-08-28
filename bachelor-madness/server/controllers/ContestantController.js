@@ -10,6 +10,8 @@ export class ContestantController extends BaseController {
       .get('/:id', this.getContestantById)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.addContestant)
+      .delete('/:id', this.deleteContestant)
+      .put('/:id', this.editContestant)
   }
 
   async getAllContestants(req, res, next) {
@@ -31,6 +33,23 @@ export class ContestantController extends BaseController {
   async addContestant(req, res, next) {
     try {
       res.send(await contestantService.addContestant(req.body))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async deleteContestant(req, res, next) {
+    try {
+      res.send(await contestantService.deleteContestant(req.params.id))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async editContestant(req, res, next) {
+    try {
+      req.body.creatorId = req.userInfo.id
+      res.send(await contestantService.editContestant(req.body, req.params.id))
     } catch (error) {
       next(error)
     }
