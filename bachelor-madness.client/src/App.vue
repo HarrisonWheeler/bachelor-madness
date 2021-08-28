@@ -10,9 +10,11 @@
   </main>
   <footer>
     <div class="navbar">
-      <div class="active">
-        Profile
-      </div>
+      <router-link :to="{ name: 'Account' }">
+        <div class="active">
+          Profile
+        </div>
+      </router-link>
       <div>
         My Groups
       </div>
