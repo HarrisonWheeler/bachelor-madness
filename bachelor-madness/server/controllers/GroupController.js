@@ -32,7 +32,7 @@ export class GroupController extends BaseController {
 
   async deleteGroup(req, res, next) {
     try {
-      res.send(await groupService.deleteGroup(req.params.id))
+      res.send(await groupService.deleteGroup(req.params.id, req.userInfo.id))
     } catch (error) {
       next(error)
     }
