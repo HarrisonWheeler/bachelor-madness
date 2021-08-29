@@ -27,7 +27,7 @@ class GroupService {
   }
 
   async editGroup(editedGroup, groupId) {
-    const groupToEdit = this.getGroupById(groupId)
+    const groupToEdit = await this.getGroupById(groupId)
     if (groupToEdit !== editedGroup.creatorId) {
       throw new BadRequest('Unable to edit - unauthorized')
     }
