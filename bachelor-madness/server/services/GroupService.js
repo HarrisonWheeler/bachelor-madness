@@ -14,8 +14,12 @@ class GroupService {
     return await dbContext.Group.create(newGroup)
   }
 
-  async deleteGroup(groupId) {
-    const groupToDelete = this.getGroupById(groupId)
+  async deleteGroup(groupId, userId) {
+    const foundGroup = await this.getGroupById(groupId)
+    if (foundGroup.creatorId !== userId) {
+      throw new BadRequest('Unable to delete - not authorized')
+    }
+    const groupToDelete = await dbContext.Group.findByIdAndDelete(groupId)
     if (!groupToDelete) {
       throw new BadRequest('Unable to delete group')
     }

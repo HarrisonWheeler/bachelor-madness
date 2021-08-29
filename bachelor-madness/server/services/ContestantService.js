@@ -23,7 +23,7 @@ class ContestantService {
     if (!contestantToDelete) {
       throw new BadRequest('Unable to delete contestant')
     }
-    return contestantToDelete
+    return await dbContext.Contestant.findByIdAndDelete(contestantId)
   }
 
   async editContestant(editedContestant, contestantId) {
