@@ -40,6 +40,7 @@ export class GroupController extends BaseController {
 
   async editGroup(req, res, next) {
     try {
+      req.body.creatorId = req.userInfo.id
       res.send(await groupService.editGroup(req.body, req.params.id))
     } catch (error) {
       next(error)
