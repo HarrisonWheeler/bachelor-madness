@@ -3,7 +3,7 @@ import { BadRequest } from '../utils/Errors'
 
 class TeamService {
   async getTeamById(teamId) {
-    const foundTeam = await dbContext.Team.findById(teamId)
+    const foundTeam = await dbContext.Team.findById(teamId).populate('creator', 'name picture')
     if (!foundTeam) {
       throw new BadRequest('Unable to find that team')
     }
@@ -19,23 +19,22 @@ class TeamService {
     if (teamToDelete.creatorId !== userId) {
       throw new BadRequest('Unauthorized to delete')
     }
-    const deleted = await dbContext.Team.findByIdAndDelete(teamId)
-    if (!deleted) {
-      throw new BadRequest('Unable to delete')
-    }
-    return deleted
+    await teamToDelete.remove()
+    return teamToDelete
   }
 
   async editTeam(editedTeam, teamId) {
-    const teamToEdit = await this.getTeamById(teamId)
-    if (teamToEdit.creatorId !== editedTeam.creatorId) {
+    const foundTeam = await this.getTeamById(teamId)
+    if (foundTeam.creatorId !== editedTeam.creatorId) {
       throw new BadRequest('Unauthorized to edit')
     }
-    const edited = await dbContext.Team.findByIdAndUpdate(teamId, editedTeam, { new: true })
-    if (!edited) {
-      throw new BadRequest('Unable to edit')
-    }
-    return edited
+    // REVIEW creator id....?
+    foundTeam.name = editedTeam.name || foundTeam.name
+    foundTeam.teamScore = editedTeam.teamScore || foundTeam.teamScore
+    foundTeam.groupId = editedTeam.groupId || foundTeam.groupId
+
+    foundTeam.save()
+    return foundTeam
   }
 }
 

@@ -3,7 +3,7 @@ import { BadRequest } from '../utils/Errors'
 
 class GroupService {
   async getGroupById(groupId) {
-    const foundGroup = await dbContext.Group.findById(groupId)
+    const foundGroup = await dbContext.Group.findById(groupId).populate('creator', 'name picture')
     if (!foundGroup) {
       throw new BadRequest('Unable to find that group')
     }
@@ -15,23 +15,26 @@ class GroupService {
   }
 
   async deleteGroup(groupId, userId) {
-    const foundGroup = await this.getGroupById(groupId)
-    if (foundGroup.creatorId !== userId) {
+    const groupToDelete = await this.getGroupById(groupId)
+    if (groupToDelete.creatorId !== userId) {
       throw new BadRequest('Unable to delete - not authorized')
     }
-    const groupToDelete = await dbContext.Group.findByIdAndDelete(groupId)
-    if (!groupToDelete) {
-      throw new BadRequest('Unable to delete group')
-    }
+    groupToDelete.remove()
     return groupToDelete
   }
 
   async editGroup(editedGroup, groupId) {
-    const groupToEdit = await this.getGroupById(groupId)
-    if (groupToEdit.creatorId !== editedGroup.creatorId) {
+    const foundGroup = await this.getGroupById(groupId)
+    if (foundGroup.creatorId !== editedGroup.creatorId) {
       throw new BadRequest('Unable to edit - unauthorized')
     }
-    return await dbContext.Group.findByIdAndUpdate(groupId, editedGroup, { new: true })
+    // creator Id......?
+    foundGroup.name = editedGroup.name || foundGroup.name
+    foundGroup.groupMembers = editedGroup.groupMembers || foundGroup.groupMembers
+    foundGroup.matchCode = editedGroup.matchCode || foundGroup.matchCode
+
+    foundGroup.save()
+    return foundGroup
   }
 }
 

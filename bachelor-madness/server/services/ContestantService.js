@@ -20,15 +20,21 @@ class ContestantService {
 
   async deleteContestant(contestantId) {
     const contestantToDelete = await this.getContestantById(contestantId)
-    if (!contestantToDelete) {
-      throw new BadRequest('Unable to delete contestant')
-    }
-    return await dbContext.Contestant.findByIdAndDelete(contestantId)
+    await contestantToDelete.remove()
+    return contestantToDelete
   }
 
   async editContestant(editedContestant, contestantId) {
-    await this.getContestantById(contestantId)
-    return await dbContext.Contestant.findByIdAndUpdate(contestantId, editedContestant, { new: true })
+    const foundContestant = await this.getContestantById(contestantId)
+    foundContestant.name = editedContestant.name || foundContestant.name
+    foundContestant.bio = editedContestant.bio || foundContestant.bio
+    foundContestant.imgUrl = editedContestant.imgUrl || foundContestant.imgUrl
+    foundContestant.teamId = editedContestant.teamId || foundContestant.teamId
+    foundContestant.score = editedContestant.score || foundContestant.score
+    foundContestant.eliminated = editedContestant.eliminated || foundContestant.eliminated
+
+    await foundContestant.save()
+    return foundContestant
   }
 }
 
